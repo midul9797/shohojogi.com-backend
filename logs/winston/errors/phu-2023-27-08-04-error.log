@@ -1,0 +1,18 @@
+Sun Aug 27 2023 4:45:22 } [PH] error: 
+Invalid `prisma.academicSemester.create()` invocation in
+O:\Web\level 2\University Management\university-management-core-service\src\app\modules\academicSemester\academicSemester.service.ts:7:48
+
+  4 const insertIntoDB = async (
+  5   data: AcademicSemester
+  6 ): Promise<AcademicSemester | null> => {
+→ 7   const result = await prisma.academicSemester.create({
+        data: {
+          title: "Fall",
+          code: "03",
+          startMonth: "September",
+          endMonth: "January",
+      +   year: Int
+        }
+      })
+
+Argument `year` is missing.
