@@ -10,7 +10,7 @@ import { Prisma } from '@prisma/client';
 import { ZodError } from 'zod';
 import handleZodError from '../../errors/handleZodError';
 import { IGenericErrorMessage } from '../../interfaces/error';
-import { errorlogger } from '../../shared/logger';
+
 import handleClientError from '../../errors/handleClientError';
 
 const globalErrorHandler: ErrorRequestHandler = (
@@ -21,7 +21,7 @@ const globalErrorHandler: ErrorRequestHandler = (
 ) => {
   config.env === 'development'
     ? console.log(`🐱‍🏍 globalErrorHandler ~~`, { error })
-    : errorlogger.error(`🐱‍🏍 globalErrorHandler ~~`, error);
+    : console.log('Error');
 
   let statusCode = 500;
   let message = 'Something went wrong !';

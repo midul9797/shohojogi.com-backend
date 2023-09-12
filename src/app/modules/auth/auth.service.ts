@@ -4,9 +4,20 @@ import { IUserCreate } from './auth.interface';
 const prisma = new PrismaClient();
 
 const insertIntoDB = async (data: User): Promise<IUserCreate | null> => {
-  const result = await prisma.user.create({ data });
-  const { password, ...res } = result;
-  return res;
+  const result = await prisma.user.create({
+    data,
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      role: true,
+      contactNo: true,
+      address: true,
+      profileImg: true,
+    },
+  });
+
+  return result;
 };
 
 export const AuthService = {
