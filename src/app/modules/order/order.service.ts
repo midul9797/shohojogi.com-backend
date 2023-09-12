@@ -41,8 +41,12 @@ const getAllOrder = async (
 ): Promise<Order[] | null> => {
   let result;
   if (role === 'admin') {
-    result = await prisma.order.findMany({});
-  } else result = await prisma.order.findMany({ where: { userId } });
+    result = await prisma.order.findMany({ include: { orderedBooks: true } });
+  } else
+    result = await prisma.order.findMany({
+      where: { userId },
+      include: { orderedBooks: true },
+    });
   return result;
 };
 
@@ -53,8 +57,15 @@ const getSingleOrder = async (
 ): Promise<Order | null> => {
   let result;
   if (role === 'admin') {
-    result = await prisma.order.findUnique({ where: { id } });
-  } else result = await prisma.order.findUnique({ where: { id, userId } });
+    result = await prisma.order.findUnique({
+      where: { id },
+      include: { orderedBooks: true },
+    });
+  } else
+    result = await prisma.order.findUnique({
+      where: { id, userId },
+      include: { orderedBooks: true },
+    });
   return result;
 };
 
