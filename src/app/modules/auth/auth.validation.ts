@@ -21,7 +21,17 @@ const create = z.object({
     profileImg: z.string({ required_error: 'Image URL is required' }),
   }),
 });
-
+const login = z.object({
+  body: z.object({
+    id: z.string({
+      required_error: 'Email is required',
+    }),
+    password: z.string({
+      required_error: 'Password is required',
+    }),
+  }),
+});
 export const AuthValidation = {
   create,
+  login,
 };

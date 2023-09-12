@@ -6,3 +6,7 @@ export type IUserCreate = {
   address: string | null;
   profileImg: string;
 };
+export type ILoginUser = {
+  id: string;
+  password: string;
+};

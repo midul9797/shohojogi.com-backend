@@ -1,5 +1,11 @@
 import { PrismaClient, User } from '@prisma/client';
-import { IUserCreate } from './auth.interface';
+import httpStatus from 'http-status';
+import ApiError from '../../../errors/ApiError';
+import { jwtHelpers } from '../../../helpers/jwtHelpers';
+import { ILoginUser, IUserCreate } from './auth.interface';
+
+import { Secret } from 'jsonwebtoken';
+import config from '../../../config';
 
 const prisma = new PrismaClient();
 
@@ -19,7 +25,21 @@ const insertIntoDB = async (data: User): Promise<IUserCreate | null> => {
 
   return result;
 };
+const loginUser = async (loginData: ILoginUser): Promise<string> => {
+  const { id, password } = loginData;
+  const isUserExist = await prisma.user.findUnique({ where: { id, password } });
+  if (!isUserExist)
+    throw new ApiError(httpStatus.NOT_FOUND, 'Wrong user id or password');
 
+  const accessToken = jwtHelpers.createToken(
+    { userId: isUserExist?.id, role: isUserExist?.role },
+    config.jwt.secret as Secret,
+    config.jwt.expires_in as string
+  );
+
+  return accessToken;
+};
 export const AuthService = {
   insertIntoDB,
+  loginUser,
 };
