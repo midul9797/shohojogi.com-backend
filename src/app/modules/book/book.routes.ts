@@ -13,8 +13,8 @@ router
     validateRequest(BookValidation.create),
     BookController.insertIntoDB
   )
-  .get('/:categoryId', BookController.getBooksByCategory)
   .get('/:id', BookController.getSingleBook)
+  .get('/category/:categoryId', BookController.getBooksByCategory)
   .get('/', BookController.getAllBook)
   .patch(
     '/:id',
