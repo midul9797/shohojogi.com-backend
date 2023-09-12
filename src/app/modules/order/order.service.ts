@@ -52,20 +52,12 @@ const getAllOrder = async (
 
 const getSingleOrder = async (
   id: string,
-  role: string,
   userId: string
 ): Promise<Order | null> => {
-  let result;
-  if (role === 'admin') {
-    result = await prisma.order.findUnique({
-      where: { id },
-      include: { orderedBooks: true },
-    });
-  } else
-    result = await prisma.order.findUnique({
-      where: { id, userId },
-      include: { orderedBooks: true },
-    });
+  const result = await prisma.order.findUnique({
+    where: { id, userId },
+    include: { orderedBooks: true },
+  });
   return result;
 };
 

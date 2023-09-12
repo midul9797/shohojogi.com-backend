@@ -10,11 +10,7 @@ import { OrderValidation } from './order.validation';
 const router = express.Router();
 
 router
-  .get(
-    '/:id',
-    auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.CUSTOMER),
-    OrderController.getSingleOrder
-  )
+  .get('/:id', auth(ENUM_USER_ROLE.CUSTOMER), OrderController.getSingleOrder)
   .get(
     '/',
     auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.CUSTOMER),
