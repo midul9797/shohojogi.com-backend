@@ -15,7 +15,7 @@ const createOrder = catchAsync(async (req: Request, res: Response) => {
   });
 });
 const getAllOrder = catchAsync(async (req: Request, res: Response) => {
-  const { userId, role } = req.user;
+  const { userId, role } = req.user as any;
   const result = await OrderService.getAllOrder(userId, role);
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -27,7 +27,7 @@ const getAllOrder = catchAsync(async (req: Request, res: Response) => {
 
 const getSingleOrder = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
-  const { userId } = req.user;
+  const { userId } = req.user as any;
   const result = await OrderService.getSingleOrder(id, userId);
   sendResponse(res, {
     statusCode: httpStatus.OK,
