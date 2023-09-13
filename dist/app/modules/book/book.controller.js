@@ -67,7 +67,7 @@ const updateBook = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, voi
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.OK,
         success: true,
-        message: 'Academic Faculty Updated',
+        message: 'Book Updated',
         data: result,
     });
 }));
@@ -77,7 +77,7 @@ const deleteBook = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, voi
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.OK,
         success: true,
-        message: 'Academic Faculty Deleted',
+        message: 'Book Deleted',
         data: result,
     });
 }));
