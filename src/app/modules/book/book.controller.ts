@@ -57,7 +57,7 @@ const updateBook = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Academic Faculty Updated',
+    message: 'Book Updated',
     data: result,
   });
 });
@@ -67,7 +67,7 @@ const deleteBook = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Academic Faculty Deleted',
+    message: 'Book Deleted',
     data: result,
   });
 });

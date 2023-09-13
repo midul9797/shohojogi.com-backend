@@ -8,12 +8,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.OrderService = void 0;
 const client_1 = require("@prisma/client");
 const asyncForEach_1 = require("../../../shared/asyncForEach");
+const http_status_1 = __importDefault(require("http-status"));
+const ApiError_1 = __importDefault(require("../../../errors/ApiError"));
 const prisma = new client_1.PrismaClient();
-const createOrder = (data) => __awaiter(void 0, void 0, void 0, function* () {
+const createOrder = (data, id) => __awaiter(void 0, void 0, void 0, function* () {
+    if (id !== data.userId)
+        throw new ApiError_1.default(http_status_1.default.BAD_REQUEST, 'Wrong User Id');
     const result = yield prisma.order.create({ data: { userId: data.userId } });
     yield (0, asyncForEach_1.asyncForEach)(data.orderedBooks, (orderedBook) => __awaiter(void 0, void 0, void 0, function* () {
         yield prisma.orderedBook.create({

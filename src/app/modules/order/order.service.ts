@@ -1,12 +1,17 @@
 import { Order, PrismaClient } from '@prisma/client';
 import { asyncForEach } from '../../../shared/asyncForEach';
 
+import httpStatus from 'http-status';
+import ApiError from '../../../errors/ApiError';
 import { ICreateOrder } from './order.interface';
 
 const prisma = new PrismaClient();
 const createOrder = async (
-  data: ICreateOrder
+  data: ICreateOrder,
+  id: string
 ): Promise<Partial<Order> | null> => {
+  if (id !== data.userId)
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Wrong User Id');
   const result = await prisma.order.create({ data: { userId: data.userId } });
   await asyncForEach(
     data.orderedBooks,
