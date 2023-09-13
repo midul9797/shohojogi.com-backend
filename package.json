@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "engines": {
-    "node": ">=16"
+    "node": ">=16.13"
   },
   "scripts": {
-    "postinstall": "npx prisma generate",
+    
     "start": "node dist/server.ts",
     "build": "tsc",
     "lint:check": "eslint --ignore-path .eslintignore --ext .js,.ts .",
