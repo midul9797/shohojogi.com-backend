@@ -25,7 +25,7 @@ const create = zod_1.z.object({
 });
 const login = zod_1.z.object({
     body: zod_1.z.object({
-        id: zod_1.z.string({
+        email: zod_1.z.string({
             required_error: 'Email is required',
         }),
         password: zod_1.z.string({

@@ -23,7 +23,7 @@ const create = z.object({
 });
 const login = z.object({
   body: z.object({
-    id: z.string({
+    email: z.string({
       required_error: 'Email is required',
     }),
     password: z.string({

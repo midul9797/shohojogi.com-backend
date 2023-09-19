@@ -14,7 +14,7 @@ const router = express_1.default.Router();
 router
     .post('/create-book', (0, auth_1.default)(user_1.ENUM_USER_ROLE.ADMIN), (0, validateRequest_1.default)(book_validation_1.BookValidation.create), book_controller_1.BookController.insertIntoDB)
     .get('/:id', book_controller_1.BookController.getSingleBook)
-    .get('/category/:categoryId', book_controller_1.BookController.getBooksByCategory)
+    .get('/:categoryId/category', book_controller_1.BookController.getBooksByCategory)
     .get('/', book_controller_1.BookController.getAllBook)
     .patch('/:id', (0, auth_1.default)(user_1.ENUM_USER_ROLE.ADMIN), (0, validateRequest_1.default)(book_validation_1.BookValidation.update), book_controller_1.BookController.updateBook)
     .delete('/:id', (0, auth_1.default)(user_1.ENUM_USER_ROLE.ADMIN), book_controller_1.BookController.deleteBook);

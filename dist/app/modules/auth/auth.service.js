@@ -35,10 +35,12 @@ const insertIntoDB = (data) => __awaiter(void 0, void 0, void 0, function* () {
     return result;
 });
 const loginUser = (loginData) => __awaiter(void 0, void 0, void 0, function* () {
-    const { id, password } = loginData;
-    const isUserExist = yield prisma.user.findUnique({ where: { id, password } });
+    const { email, password } = loginData;
+    const isUserExist = yield prisma.user.findFirst({
+        where: { email, password },
+    });
     if (!isUserExist)
-        throw new ApiError_1.default(http_status_1.default.NOT_FOUND, 'Wrong user id or password');
+        throw new ApiError_1.default(http_status_1.default.NOT_FOUND, 'Wrong email or password');
     const accessToken = jwtHelpers_1.jwtHelpers.createToken({ userId: isUserExist === null || isUserExist === void 0 ? void 0 : isUserExist.id, role: isUserExist === null || isUserExist === void 0 ? void 0 : isUserExist.role }, config_1.default.jwt.secret, config_1.default.jwt.expires_in);
     return accessToken;
 });

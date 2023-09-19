@@ -14,7 +14,7 @@ router
     BookController.insertIntoDB
   )
   .get('/:id', BookController.getSingleBook)
-  .get('/category/:categoryId', BookController.getBooksByCategory)
+  .get('/:categoryId/category', BookController.getBooksByCategory)
   .get('/', BookController.getAllBook)
   .patch(
     '/:id',

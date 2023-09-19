@@ -7,6 +7,6 @@ export type IUserCreate = {
   profileImg: string;
 };
 export type ILoginUser = {
-  id: string;
+  email: string;
   password: string;
 };

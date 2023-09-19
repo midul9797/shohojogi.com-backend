@@ -11,7 +11,7 @@ router
     AuthController.insertIntoDB
   )
   .post(
-    '/login',
+    '/signin',
     validateRequest(AuthValidation.login),
     AuthController.loginUser
   );

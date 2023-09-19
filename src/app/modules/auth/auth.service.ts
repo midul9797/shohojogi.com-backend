@@ -26,10 +26,12 @@ const insertIntoDB = async (data: User): Promise<IUserCreate | null> => {
   return result;
 };
 const loginUser = async (loginData: ILoginUser): Promise<string> => {
-  const { id, password } = loginData;
-  const isUserExist = await prisma.user.findUnique({ where: { id, password } });
+  const { email, password } = loginData;
+  const isUserExist = await prisma.user.findFirst({
+    where: { email, password },
+  });
   if (!isUserExist)
-    throw new ApiError(httpStatus.NOT_FOUND, 'Wrong user id or password');
+    throw new ApiError(httpStatus.NOT_FOUND, 'Wrong email or password');
 
   const accessToken = jwtHelpers.createToken(
     { userId: isUserExist?.id, role: isUserExist?.role },
