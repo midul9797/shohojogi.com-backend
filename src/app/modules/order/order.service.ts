@@ -26,10 +26,11 @@ const getAllOrder = async (
 ): Promise<Order[] | null> => {
   let result;
   if (role === 'admin') {
-    result = await prisma.order.findMany({});
+    result = await prisma.order.findMany({ include: { user: true } });
   } else
     result = await prisma.order.findMany({
       where: { userId },
+      include: { user: true },
     });
   return result;
 };

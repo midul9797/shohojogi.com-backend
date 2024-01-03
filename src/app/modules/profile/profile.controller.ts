@@ -26,8 +26,18 @@ const updateProfile = catchAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
+const makeAdmin = catchAsync(async (req: Request, res: Response) => {
+  const result = await ProfileService.makeAdmin(req.body);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Admin Created successfully',
+    data: result,
+  });
+});
 
 export const ProfileController = {
   getProfile,
   updateProfile,
+  makeAdmin,
 };

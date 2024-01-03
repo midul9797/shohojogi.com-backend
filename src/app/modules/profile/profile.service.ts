@@ -11,6 +11,16 @@ const getProfile = async (id: string): Promise<User | null> => {
   });
   return result;
 };
+const makeAdmin = async (payload: {
+  email: string;
+}): Promise<{ count: number }> => {
+  const result = await prisma.user.updateMany({
+    where: { email: payload.email },
+    data: { role: 'admin' },
+  });
+  if (result) return result;
+  else throw new ApiError(httpStatus.BAD_REQUEST, 'Failed');
+};
 const updateProfile = async (
   id: string,
 
@@ -49,4 +59,5 @@ const updateProfile = async (
 export const ProfileService = {
   getProfile,
   updateProfile,
+  makeAdmin,
 };

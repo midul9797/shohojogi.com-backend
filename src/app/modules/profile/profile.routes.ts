@@ -10,6 +10,7 @@ router
     auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.CUSTOMER),
     ProfileController.getProfile
   )
+  .patch('/make-admin', auth(ENUM_USER_ROLE.ADMIN), ProfileController.makeAdmin)
   .patch(
     '/',
     auth(ENUM_USER_ROLE.CUSTOMER, ENUM_USER_ROLE.ADMIN),
