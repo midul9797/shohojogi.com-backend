@@ -5,10 +5,15 @@ const zod_1 = require("zod");
 const create = zod_1.z.object({
     body: zod_1.z.object({
         userId: zod_1.z.string().optional(),
-        orderedBooks: zod_1.z.array(zod_1.z.object({
-            bookId: zod_1.z.string({ required_error: 'Book Id is required' }),
-            quantity: zod_1.z.number({ required_error: 'Quantity is required' }),
-        }), { required_error: 'ordered Books is required' }),
+        delivery_time: zod_1.z.string(),
+        service: zod_1.z.string(),
+        contact: zod_1.z.string(),
+        address: zod_1.z.string(),
+        order_details: zod_1.z.string(),
+        subtotal: zod_1.z.number(),
+        delivery_fee: zod_1.z.number(),
+        total_amount: zod_1.z.number(),
+        note: zod_1.z.string(),
     }),
 });
 exports.OrderValidation = {

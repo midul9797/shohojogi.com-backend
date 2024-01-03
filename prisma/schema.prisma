@@ -3,81 +3,57 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
-  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+  provider = "postgresql"
+  url      = env("DATABASE_URL") // uses connection pooling
 }
 
 model User {
-  id              String            @id @default(uuid())
-  name            String
-  email           String
-  password        String
-  role            Role
-  contactNo       String
-  address         String?
-  profileImg      String
-  ReviewAndRating ReviewAndRating[]
-  Order           Order[]
+  id         String   @id @default(uuid())
+  first_name String
+  last_name  String
+  email      String
+  password   String
+  role       Role
+  contactNo  String?
+  address    Address? @relation(fields: [addressId], references: [id])
+  profileImg String?
+  Order      Order[]
+  addressId  String?
 
   @@map("users")
 }
 
-model Category {
+model Address {
   id    String @id @default(uuid())
-  title String
-  books Book[]
+  house String
+  road  String
+  ward  String
+  zip   String
+  city  String
+  block String
+  User  User[]
 
-  @@map("categories")
-}
-
-model Book {
-  id                String            @id @default(uuid())
-  title             String
-  author            String
-  price             Float
-  genre             String
-  publicationDate   String
-  categoryId        String
-  category          Category          @relation(fields: [categoryId], references: [id])
-  reviewsAndRatings ReviewAndRating[]
-  orderedBooks      OrderedBook[]
-
-  @@map("books")
-}
-
-model ReviewAndRating {
-  id     String @id @default(uuid())
-  review String
-  rating Int
-  userId String
-  user   User   @relation(fields: [userId], references: [id])
-  bookId String
-  book   Book   @relation(fields: [bookId], references: [id])
-
-  @@map("reviews-and-ratings")
+  @@map("addresses")
 }
 
 model Order {
-  id           String        @id @default(uuid())
-  userId       String
-  user         User          @relation(fields: [userId], references: [id])
-  status       Status        @default(pending)
-  createdAt    DateTime      @default(now())
-  orderedBooks OrderedBook[]
-}
+  id            String   @id @default(uuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id])
+  status        Status   @default(pending)
+  order_number  Int      @default(autoincrement())
+  createdAt     DateTime @default(now())
+  delivery_time String
+  service       String
+  contact       String
+  address       String
+  order_details String
+  subtotal      Int
+  delivery_fee  Int
+  total_amount  Int
+  note          String
 
-model OrderedBook {
-  id      String @id @default(uuid())
-  orderId String
-  order   Order  @relation(fields: [orderId], references: [id])
-
-  bookId String
-  book   Book   @relation(fields: [bookId], references: [id])
-
-  quantity Int
-
-  @@map("orderd-books")
+  @@map("orders")
 }
 
 enum Role {

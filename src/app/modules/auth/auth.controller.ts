@@ -8,6 +8,7 @@ import { IUserCreate } from './auth.interface';
 import { AuthService } from './auth.service';
 
 const insertIntoDB = catchAsync(async (req: Request, res: Response) => {
+  console.log(req.body);
   const result = await AuthService.insertIntoDB(req.body);
   sendResponse<IUserCreate>(res, {
     statusCode: httpStatus.OK,

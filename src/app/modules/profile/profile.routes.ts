@@ -4,10 +4,16 @@ import auth from '../../middlewares/auth';
 import { ProfileController } from './profile.controller';
 const router = express.Router();
 
-router.get(
-  '/',
-  auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.CUSTOMER),
-  ProfileController.getProfile
-);
+router
+  .get(
+    '/',
+    auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.CUSTOMER),
+    ProfileController.getProfile
+  )
+  .patch(
+    '/',
+    auth(ENUM_USER_ROLE.CUSTOMER, ENUM_USER_ROLE.ADMIN),
+    ProfileController.updateProfile
+  );
 
 export const ProfileRoutes = router;

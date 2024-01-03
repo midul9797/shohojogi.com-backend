@@ -14,12 +14,10 @@ const insertIntoDB = async (data: User): Promise<IUserCreate | null> => {
     data,
     select: {
       id: true,
-      name: true,
+      first_name: true,
+      last_name: true,
       email: true,
       role: true,
-      contactNo: true,
-      address: true,
-      profileImg: true,
     },
   });
 

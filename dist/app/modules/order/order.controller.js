@@ -18,8 +18,8 @@ const catchAsync_1 = __importDefault(require("../../../shared/catchAsync"));
 const sendResponse_1 = __importDefault(require("../../../shared/sendResponse"));
 const order_service_1 = require("./order.service");
 const createOrder = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { userId } = req.user;
-    const result = yield order_service_1.OrderService.createOrder(req.body, userId);
+    const { userId, role } = req.user;
+    const result = yield order_service_1.OrderService.createOrder(req.body, userId, role);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.OK,
         success: true,
@@ -37,10 +37,10 @@ const getAllOrder = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, vo
         data: result,
     });
 }));
-const getSingleOrder = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const deleteOrder = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    const { userId } = req.user;
-    const result = yield order_service_1.OrderService.getSingleOrder(id, userId);
+    const { userId, role } = req.user;
+    const result = yield order_service_1.OrderService.deleteOrder(id, userId, role);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.OK,
         success: true,
@@ -51,5 +51,5 @@ const getSingleOrder = (0, catchAsync_1.default)((req, res) => __awaiter(void 0,
 exports.OrderController = {
     createOrder,
     getAllOrder,
-    getSingleOrder,
+    deleteOrder,
 };

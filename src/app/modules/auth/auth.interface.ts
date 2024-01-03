@@ -1,10 +1,9 @@
 export type IUserCreate = {
-  name: string;
+  first_name: string;
+  last_name: string;
   role: string;
-  contactNo: string;
+
   email: string;
-  address: string | null;
-  profileImg: string;
 };
 export type ILoginUser = {
   email: string;

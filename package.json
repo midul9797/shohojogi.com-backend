@@ -1,5 +1,5 @@
 {
-  "name": "university-management-core-service",
+  "name": "shohojogi.com-backend",
   "version": "1.0.0",
   "description": "",
   "engines": {
@@ -15,7 +15,7 @@
     "lint-prettier": "yarn lint:check && yarn prettier:check",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Programming Hero",
+  "author": "EDU",
   "license": "ISC",
   "lint-staged": {
     "src/**/*.ts": "yarn lint-prettier"
@@ -45,8 +45,6 @@
     "express": "^4.18.2",
     "http-status": "^1.6.2",
     "jsonwebtoken": "^9.0.2",
-    "winston": "^3.9.0",
-    "winston-daily-rotate-file": "^4.7.1",
     "zod": "^3.21.4"
   }
 }

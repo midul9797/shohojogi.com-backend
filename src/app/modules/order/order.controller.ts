@@ -6,8 +6,8 @@ import sendResponse from '../../../shared/sendResponse';
 
 import { OrderService } from './order.service';
 const createOrder = catchAsync(async (req: Request, res: Response) => {
-  const { userId } = req.user as any;
-  const result = await OrderService.createOrder(req.body, userId);
+  const { userId, role } = req.user as any;
+  const result = await OrderService.createOrder(req.body, userId, role);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -26,10 +26,10 @@ const getAllOrder = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-const getSingleOrder = catchAsync(async (req: Request, res: Response) => {
+const deleteOrder = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
-  const { userId } = req.user as any;
-  const result = await OrderService.getSingleOrder(id, userId);
+  const { userId, role } = req.user as any;
+  const result = await OrderService.deleteOrder(id, userId, role);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -41,5 +41,5 @@ const getSingleOrder = catchAsync(async (req: Request, res: Response) => {
 export const OrderController = {
   createOrder,
   getAllOrder,
-  getSingleOrder,
+  deleteOrder,
 };

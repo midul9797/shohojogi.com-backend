@@ -10,7 +10,7 @@ const handleZodError = (error) => {
     const statusCode = 400;
     return {
         statusCode,
-        message: 'Validation Error',
+        message: 'Error',
         errorMessages: errors,
     };
 };

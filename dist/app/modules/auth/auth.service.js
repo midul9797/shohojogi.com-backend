@@ -24,12 +24,10 @@ const insertIntoDB = (data) => __awaiter(void 0, void 0, void 0, function* () {
         data,
         select: {
             id: true,
-            name: true,
+            first_name: true,
+            last_name: true,
             email: true,
             role: true,
-            contactNo: true,
-            address: true,
-            profileImg: true,
         },
     });
     return result;

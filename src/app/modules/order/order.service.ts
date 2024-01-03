@@ -1,5 +1,4 @@
 import { Order, PrismaClient } from '@prisma/client';
-import { asyncForEach } from '../../../shared/asyncForEach';
 
 import httpStatus from 'http-status';
 import ApiError from '../../../errors/ApiError';
@@ -8,37 +7,18 @@ import { ICreateOrder } from './order.interface';
 const prisma = new PrismaClient();
 const createOrder = async (
   data: ICreateOrder,
-  id: string
+  id: string,
+  role: string
 ): Promise<Partial<Order> | null> => {
-  if (id !== data.userId)
-    throw new ApiError(httpStatus.BAD_REQUEST, 'Wrong User Id');
-  const result = await prisma.order.create({ data: { userId: data.userId } });
-  await asyncForEach(
-    data.orderedBooks,
-    async (orderedBook: Record<string, unknown>) => {
-      await prisma.orderedBook.create({
-        data: {
-          orderId: result.id,
-          bookId: orderedBook.bookId as string,
-          quantity: orderedBook.quantity as number,
-        },
-      });
-    }
-  );
-  const res = await prisma.order.findUnique({
-    where: { id: result.id },
-    select: {
-      id: true,
-      userId: true,
-      orderedBooks: {
-        select: {
-          bookId: true,
-          quantity: true,
-        },
-      },
-    },
-  });
-  return res;
+  if (role === 'admin')
+    throw new ApiError(
+      httpStatus.BAD_REQUEST,
+      'Admins are not allowed to create order'
+    );
+  data.userId = id;
+  const result = await prisma.order.create({ data });
+
+  return result;
 };
 const getAllOrder = async (
   userId: string,
@@ -46,28 +26,30 @@ const getAllOrder = async (
 ): Promise<Order[] | null> => {
   let result;
   if (role === 'admin') {
-    result = await prisma.order.findMany({ include: { orderedBooks: true } });
+    result = await prisma.order.findMany({});
   } else
     result = await prisma.order.findMany({
       where: { userId },
-      include: { orderedBooks: true },
     });
   return result;
 };
-
-const getSingleOrder = async (
+const deleteOrder = async (
   id: string,
-  userId: string
+  userId: string,
+  role: string
 ): Promise<Order | null> => {
-  const result = await prisma.order.findUnique({
-    where: { id, userId },
-    include: { orderedBooks: true },
+  if (role === 'customer') {
+    const user = await prisma.order.findUnique({ where: { id } });
+    if (user?.userId !== userId)
+      throw new ApiError(httpStatus.BAD_REQUEST, 'Not Your Order');
+  }
+  const result = await prisma.order.delete({
+    where: { id },
   });
   return result;
 };
-
 export const OrderService = {
   createOrder,
   getAllOrder,
-  getSingleOrder,
+  deleteOrder,
 };
