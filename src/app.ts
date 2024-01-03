@@ -4,10 +4,12 @@ import httpStatus from 'http-status';
 import globalErrorHandler from './app/middlewares/globalErrorHandler';
 import routes from './app/routes';
 
+import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 
 const app: Application = express();
-
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(
   cors({
     origin: 'http://localhost:3000',
